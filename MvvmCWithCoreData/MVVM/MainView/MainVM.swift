@@ -20,10 +20,10 @@ final class MainVM {
     private let coreDataStack: CoreDataStack
     public var delegate: MainVMDelegate?
     
+    
     init(coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
     }
-    
     
     public func addNewUnit(_ name: String) {
         let unit = Unit(entity: Unit.entity(), insertInto: coreDataStack.managedContext)

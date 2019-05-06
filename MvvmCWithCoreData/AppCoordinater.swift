@@ -12,7 +12,7 @@ final class AppCoordinater {
     private let navigationController: UINavigationController
     private let coreDataStack: CoreDataStack
     private var mainVC: MainVC?
-    
+    private var detailVC: DetailVC?
     
     init(_ navigationController: UINavigationController, coreDataStack: CoreDataStack) {
         self.navigationController = navigationController
@@ -27,20 +27,30 @@ final class AppCoordinater {
 
 
 // MARK: - MainVC
-extension AppCoordinater {
+extension AppCoordinater: MainVCDelegate {
     
     fileprivate func addMainVC() {
         let vm = MainVM(coreDataStack: coreDataStack)
         mainVC = MainVC(viewModel: vm)
-        vm.delegate = mainVC
+        vm.delegate = mainVC!
+        mainVC!.delegate = self
         navigationController.pushViewController(mainVC!, animated: true)
     }
-    
+ 
+    func mainVCOpenDetailVC(_ unit: Unit) {
+        addDetailVC(unit: unit)
+    }
 }
 
 
 // MARK: - DetailVC
 extension AppCoordinater  {
     
-    fileprivate func addDetailVC() {}
+    fileprivate func addDetailVC(unit: Unit) {
+        let vm = DetailVM(coreDataStack: coreDataStack, unit: unit)
+        detailVC = DetailVC(viewModel: vm)
+        vm.delegate = detailVC!
+        vm.createFetchController()
+        navigationController.pushViewController(detailVC!, animated: true)
+    }
 }

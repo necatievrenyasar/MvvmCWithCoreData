@@ -1,5 +1,5 @@
 //
-//  MainVC.swift
+//  DetailVC.swift
 //  MvvmCWithCoreData
 //
 //  Created by Evren Yaşar on 6.05.2019.
@@ -7,25 +7,14 @@
 //
 
 import UIKit
-
-public protocol MainVCDelegate: class {
-    func mainVCOpenDetailVC(_ unit: Unit)
-}
-
-final class MainVC: UIViewController {
+import CoreData
+final class DetailVC: UIViewController {
     
-    private let viewModel: MainVM
+    private let viewModel: DetailVM
     private let tableView = UITableView()
-    private let cellIdentifier = "MainVCCell"
-    fileprivate var datas = [Unit]() {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    private let cellIdentifier = "DetailVCCell"
     
-    public var delegate: MainVCDelegate?
-    
-    init(viewModel: MainVM) {
+    init(viewModel: DetailVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,22 +27,22 @@ final class MainVC: UIViewController {
         view.backgroundColor = UIColor.white
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButton))
         setupTableView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewModel.fetchData()
+        
     }
     
     @objc func addButton() {
         let controller = UIAlertController(title: "Unit", message: "Add new unit", preferredStyle: UIAlertController.Style.alert)
         controller.addTextField { (tf) in
-            tf.placeholder = "Name"
+            tf.placeholder = "Word"
+        }
+        controller.addTextField { (tf) in
+            tf.placeholder = "Meaning"
         }
         
         let addButton = UIAlertAction(title: "Add", style: UIAlertAction.Style.default) { (action) in
-            if let text = controller.textFields?.first?.text  {
-                self.addNewUnit(text)
+            if let textFields = controller.textFields,
+                let newWord = textFields[0].text, let newMeaning = textFields[1].text{
+                self.viewModel.add(newWord, newMeaning)
             }
         }
         let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil)
@@ -63,10 +52,9 @@ final class MainVC: UIViewController {
         present(controller, animated: true, completion: nil)
         
     }
-    
 }
 
-extension MainVC: UITableViewDelegate, UITableViewDataSource {
+extension DetailVC: UITableViewDelegate, UITableViewDataSource  {
     
     fileprivate func setupTableView() {
         tableView.delegate = self
@@ -79,42 +67,34 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
     }
- 
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return datas.count
+        return viewModel.dataCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        cell.textLabel?.text = datas[indexPath.row].name ?? "noName"
+        let model = viewModel.getObject(indexPath)
+        cell.textLabel?.text = model?.word ?? "noName"
         return cell
     }
- 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.mainVCOpenDetailVC(datas[indexPath.row])
-    }
-    
 }
 
-extension MainVC: MainVMDelegate {
-    
-    func mainVMLoadData(_ datas: [Unit]) {
-        self.datas = datas
+extension DetailVC: DetailVMDelegate {
+    func detailVMError(_ error: NSError) {
+        print("[Detail Error] \(error.userInfo)")
     }
     
-    func mainVMError(_ error: NSError) {
-        print("[ViewModel Error] \(error.localizedDescription)")
+    func detailVMRefresh(indexPath: IndexPath, type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            tableView.beginUpdates()
+            tableView.insertRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            tableView.endUpdates()
+        default:
+            ()
+        }
     }
+    
     
 }
-
-extension MainVC {
-    
-    fileprivate func addNewUnit(_ name: String) {
-        viewModel.addNewUnit(name)
-    }
-    
-}
-
-
-
