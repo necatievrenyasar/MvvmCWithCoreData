@@ -32,6 +32,7 @@ extension AppCoordinater {
     fileprivate func addMainVC() {
         let vm = MainVM(coreDataStack: coreDataStack)
         mainVC = MainVC(viewModel: vm)
+        vm.delegate = mainVC
         navigationController.pushViewController(mainVC!, animated: true)
     }
     

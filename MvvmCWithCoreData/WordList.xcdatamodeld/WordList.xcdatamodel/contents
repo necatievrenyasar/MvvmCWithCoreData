@@ -5,7 +5,7 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="word" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="unit" inverseEntity="Word" syncable="YES"/>
     </entity>
-    <entity name="Word" representedClassName="Word" syncable="YES" codeGenerationType="class">
+    <entity name="Word" representedClassName=".Word" syncable="YES">
         <attribute name="meaning" attributeType="String" syncable="YES"/>
         <attribute name="word" attributeType="String" syncable="YES"/>
         <relationship name="unit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Unit" inverseName="word" inverseEntity="Unit" syncable="YES"/>

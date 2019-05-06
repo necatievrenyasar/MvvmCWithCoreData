@@ -7,12 +7,39 @@
 //
 
 import Foundation
-class MainVM {
+import CoreData
+
+public protocol MainVMDelegate: class {
+    func mainVMLoadData(_ datas: [Unit])
+    func mainVMError(_ error: NSError)
+}
+
+
+final class MainVM {
     
-    let coreDataStack: CoreDataStack
+    private let coreDataStack: CoreDataStack
+    public var delegate: MainVMDelegate?
     
     init(coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
     }
     
+    
+    public func addNewUnit(_ name: String) {
+        let unit = Unit(entity: Unit.entity(), insertInto: coreDataStack.managedContext)
+        unit.name = name
+        unit.lang = "En"
+        coreDataStack.saveContext()
+        fetchData()
+    }
+    
+    public func fetchData() {
+        let fetchRequest = NSFetchRequest<Unit>(entityName: "Unit")
+        do {
+            let data = try coreDataStack.managedContext.fetch(fetchRequest)
+            delegate?.mainVMLoadData(data)
+        }catch let error as NSError {
+            delegate?.mainVMError(error)
+        }
+    }
 }
