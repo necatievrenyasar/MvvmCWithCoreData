@@ -18,7 +18,7 @@ public protocol MainVMDelegate: class {
 final class MainVM {
     
     private let coreDataStack: CoreDataStack
-    public var delegate: MainVMDelegate?
+    public weak var delegate: MainVMDelegate?
     
     
     init(coreDataStack: CoreDataStack) {

@@ -19,7 +19,7 @@ final class DetailVM: NSObject{
     private let coreDataStack: CoreDataStack
     private let unit: Unit
     private var wordData: NSFetchedResultsController<Word>!
-    public var delegate: DetailVMDelegate?
+    public weak var delegate: DetailVMDelegate?
     
     init(coreDataStack: CoreDataStack, unit: Unit) {
         self.coreDataStack = coreDataStack
