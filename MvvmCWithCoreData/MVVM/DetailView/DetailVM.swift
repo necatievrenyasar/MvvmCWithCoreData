@@ -24,7 +24,7 @@ final class DetailVM: NSObject{
     init(coreDataStack: CoreDataStack, unit: Unit) {
         self.coreDataStack = coreDataStack
         self.unit = unit
-    } 
+    }
     
     public func createFetchController() {
         let fetchRequest = NSFetchRequest<Word>(entityName: "Word")
