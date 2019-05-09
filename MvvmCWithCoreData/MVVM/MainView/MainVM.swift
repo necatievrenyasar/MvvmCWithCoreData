@@ -19,7 +19,7 @@ final class MainVM {
     
     private let coreDataStack: CoreDataStack
     public weak var delegate: MainVMDelegate?
-    
+    private let id = 1
     
     init(coreDataStack: CoreDataStack) {
         self.coreDataStack = coreDataStack
