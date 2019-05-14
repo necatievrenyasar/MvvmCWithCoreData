@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B27D19CE228AD59600BC1225 /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27D19CD228AD59600BC1225 /* NavBar.swift */; };
 		B2A7F1FA22808CE4003571DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A7F1F922808CE4003571DD /* AppDelegate.swift */; };
 		B2A7F20122808CE7003571DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2A7F20022808CE7003571DD /* Assets.xcassets */; };
 		B2A7F20422808CE7003571DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2A7F20222808CE7003571DD /* LaunchScreen.storyboard */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B27D19CD228AD59600BC1225 /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
 		B2A7F1F622808CE4003571DD /* MvvmCWithCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MvvmCWithCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2A7F1F922808CE4003571DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2A7F20022808CE7003571DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				B2A7F20B228091DE003571DD /* AppCoordinater.swift */,
 				B2A7F214228098AC003571DD /* CoreDataStack.swift */,
 				B2A7F21622809BB0003571DD /* WordList.xcdatamodeld */,
+				B27D19CD228AD59600BC1225 /* NavBar.swift */,
 			);
 			path = MvvmCWithCoreData;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				B2A7F21E22809EA3003571DD /* Unit+CoreDataProperties.swift in Sources */,
 				B2A7F21D22809EA3003571DD /* Unit+CoreDataClass.swift in Sources */,
 				B2A7F2252280A871003571DD /* DetailVM.swift in Sources */,
+				B27D19CE228AD59600BC1225 /* NavBar.swift in Sources */,
 				B2A7F21F22809EA3003571DD /* Word+CoreDataClass.swift in Sources */,
 				B2A7F21822809BB0003571DD /* WordList.xcdatamodeld in Sources */,
 				B2A7F1FA22808CE4003571DD /* AppDelegate.swift in Sources */,
